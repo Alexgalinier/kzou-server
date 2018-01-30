@@ -1,0 +1,22 @@
+{
+  "name": "kzou-server",
+  "version": "1.0.0",
+  "description": "Server API for Kzou App",
+  "main": "index.js",
+  "author": "Alexgalinier",
+  "scripts": {
+    "start": "node index.js",
+    "start-local-prod": "NODE_ENV=production HTTP_HEADER_ORIGIN=* node index.js",
+    "test": "jest"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^5.0.0",
+    "lodash": "^4.17.4",
+    "mongodb": "^3.0.2",
+    "shortid": "^2.2.8"
+  },
+  "devDependencies": {
+    "jest": "^21.2.1"
+  }
+}
