@@ -4,31 +4,7 @@ const Parser = require('./lib/api/parser');
 // Init
 (async () => {
   try {
-    const {
-      isProd,
-      db,
-      httpPort,
-      httpHeaderOrigin,
-    } = await require('./config')();
-
-    if (!isProd) {
-      await db.insert('students', {
-        lastname: 'Galinier',
-        firstname: 'Mélissandre',
-      });
-      await db.insert('students', {
-        lastname: 'Galinier',
-        firstname: 'Mylène',
-      });
-      await db.insert('students', {
-        lastname: 'Galinier',
-        firstname: 'Alexandre',
-      });
-      await db.insert('students', {
-        lastname: 'Jodorowski',
-        firstname: 'Alejandro',
-      });
-    }
+    const { db, httpPort, httpHeaderOrigin } = await require('./config')();
 
     const parser = Parser([require('./app/students')]);
 
@@ -51,6 +27,9 @@ const Parser = require('./lib/api/parser');
     });
 
     server.listen(httpPort);
+    server.on('listening', () =>
+      console.log(`Server started, listen on port : ${httpPort}`)
+    );
   } catch (e) {
     console.error(e);
     process.exit(1);
