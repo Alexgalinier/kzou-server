@@ -6,7 +6,10 @@ const Parser = require('./lib/api/parser');
   try {
     const { db, httpPort, httpHeaderOrigin } = await require('./config')();
 
-    const parser = Parser([require('./app/students')]);
+    const parser = Parser([
+      require('./app/students'),
+      require('./app/classrooms'),
+    ]);
 
     let server = http.createServer(function(req, res) {
       console.log(req.method, req.url);
