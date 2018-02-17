@@ -9,6 +9,7 @@ const Parser = require('./lib/api/parser');
     const parser = Parser([
       require('./app/students'),
       require('./app/classrooms'),
+      require('./app/levels'),
     ]);
 
     let server = http.createServer(function(req, res) {
