@@ -12,7 +12,7 @@ module.exports = async () => {
 
   if (BD_USER && BD_PASSWORD && BD_NAME) {
     try {
-      config.db = await require('./lib/db/db-mongo')(
+      config.db = await require('./src/shared/db/db-mongo')(
         `mongodb://${BD_USER}:${BD_PASSWORD}@ds229388.mlab.com:29388/kzou`,
         BD_NAME
       );
@@ -20,7 +20,7 @@ module.exports = async () => {
       throw new Error('Database failed to start');
     }
   } else {
-    config.db = require('./lib/db/db-memory');
+    config.db = require('./src/shared/db/db-memory');
     await config.db.insert('students', {
       lastname: 'Galinier',
       firstname: 'Mélissandre',

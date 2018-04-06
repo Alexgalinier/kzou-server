@@ -6,7 +6,11 @@ module.exports = async httpRequest => {
 
   const res = await getContent(httpRequest);
   let data = undefined;
-  if (res) data = JSON.parse(res);
+  if (res) {
+    try {
+      data = JSON.parse(res);
+    } catch (e) {}
+  }
 
   return {
     resourceName: splittedPathname[1],
