@@ -26,9 +26,7 @@ test('getAll', async () => {
 test('update', async () => {
   const objToUpdate = (await db.getAll('test'))[0];
 
-  expect(
-    await db.update('notCreatedName', objToUpdate._id, { name: 'Arnold' })
-  ).toBeUndefined();
+  expect(await db.update('notCreatedName', objToUpdate._id, { name: 'Arnold' })).toBeUndefined();
 
   const res = await db.update('test', objToUpdate._id, { name: 'Arnold' });
   expect(res).toBeDefined();

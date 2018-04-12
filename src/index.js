@@ -1,30 +1,27 @@
-import http from 'http'
-import * as prev from './shared/middlewares';
-
-const log = (req, res, next) => {
-  console.log(req.method, req.url);
-  next();
-};
-
-console.log('toto');
-
-prev.add(log);
+import * as server from './shared/server';
+import log from './hooks/log';
+import accessControl from './hooks/access-control';
+import config from './config';
+import * as Auth from './shared/auth';
+import * as Encrypt from './shared/encrypt';
+// Routes
+import login from './routes/login';
+import students from './routes/students';
+import users from './routes/users';
 
 (async () => {
-  try {
-    const { httpPort } = await require('../config')();
+  const { httpPort, httpHeaderOrigin, db, secret, saltRounds } = await config();
 
-    let server = http.createServer(async function(req, res) {
-      prev.exec(req, res);
-      res.end();
-    });
+  Auth.config({ secret });
+  Encrypt.config({ saltRounds });
 
-    server.listen(httpPort);
-    server.on('listening', () =>
-      console.log(`Server started, listen on port : ${httpPort}`)
-    );
-  } catch (e) {
-    console.error(e);
-    process.exit(1);
-  }
+  server.before(log);
+  server.before(accessControl(httpHeaderOrigin));
+
+  server.config({ db });
+  server.routes(login);
+  server.routes(students);
+  server.routes(users);
+
+  server.start(httpPort);
 })();
