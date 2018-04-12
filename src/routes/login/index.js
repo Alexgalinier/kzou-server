@@ -15,7 +15,10 @@ export default ({ post, config }) => {
     if (!await Encrypt.verify(password, user.hash)) return res.error(403);
 
     res.send({
-      token: Auth.token({ _id: user._id }),
+      token: Auth.token({
+        _id: user._id,
+        role: user.role,
+      }),
     });
   });
 };

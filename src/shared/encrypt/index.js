@@ -5,7 +5,7 @@ let encryptConfig = {
 };
 
 export const config = aConfig => {
-  encryptConfig = { ...encryptConfig, aConfig };
+  encryptConfig = { ...encryptConfig, ...aConfig };
 };
 export const hash = async password => {
   return await bcrypt.hash(password, encryptConfig.saltRounds);

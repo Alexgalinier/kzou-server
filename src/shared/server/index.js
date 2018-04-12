@@ -17,7 +17,7 @@ const handleNewRequest = async (req, res) => {
 let configurations = {};
 
 export const before = B4.add;
-export const config = aConfig => (configurations = aConfig);
+export const config = aConfig => (configurations = { ...configurations, ...aConfig });
 export const routes = routesSetter => {
   routesSetter({ all, get, put, post, _delete, config: configurations });
 };

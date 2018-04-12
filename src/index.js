@@ -4,24 +4,25 @@ import accessControl from './hooks/access-control';
 import config from './config';
 import * as Auth from './shared/auth';
 import * as Encrypt from './shared/encrypt';
+import Database from './shared/db';
 // Routes
 import login from './routes/login';
 import students from './routes/students';
 import users from './routes/users';
 
 (async () => {
-  const { httpPort, httpHeaderOrigin, db, secret, saltRounds } = await config();
+  const { auth, encrypt, web, database } = config;
 
-  Auth.config({ secret });
-  Encrypt.config({ saltRounds });
+  Auth.config(auth);
+  Encrypt.config(encrypt);
 
   server.before(log);
-  server.before(accessControl(httpHeaderOrigin));
+  server.before(accessControl(web.headerOrigin));
 
-  server.config({ db });
+  server.config({ db: await Database(database) });
   server.routes(login);
   server.routes(students);
   server.routes(users);
 
-  server.start(httpPort);
+  server.start(web.port);
 })();

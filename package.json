@@ -12,8 +12,8 @@
     "build-js": "babel src -d build",
     "watch-js": "babel src -d build -w",
     "watch-server": "nodemon --watch build build/index.js",
-    "start": "run-p watch-js watch-server",
-    "start-local-prod": "NODE_ENV=production HTTP_HEADER_ORIGIN=* node build/index.js",
+    "start": "SECRET=a run-p watch-js watch-server",
+    "start-local-prod": "NODE_ENV=production HTTP_HEADER_ORIGIN=* SECRET=a node build/index.js",
     "test": "jest"
   },
   "dependencies": {
