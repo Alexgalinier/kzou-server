@@ -1,6 +1,7 @@
+import * as db from './db-memory';
+
 const entry1 = { name: 'Jose' };
 const entry2 = { name: 'Mylene' };
-const db = require('./db-memory');
 
 test('insert', async () => {
   const newEntry = await db.insert('test', entry1);
@@ -35,12 +36,12 @@ test('update', async () => {
   expect(await db.getAll('test')).toHaveLength(2);
 });
 
-test('delete', async () => {
+test('remove', async () => {
   const objToDelete = (await db.getAll('test'))[0];
 
-  expect(await db.delete('notCreatedName', objToDelete._id)).toBeUndefined();
+  expect(await db.remove('notCreatedName', objToDelete._id)).toBeUndefined();
 
-  const res = await db.delete('test', objToDelete._id);
+  const res = await db.remove('test', objToDelete._id);
 
   expect(res).toBeDefined();
   expect(res.name).toBe('Arnold');

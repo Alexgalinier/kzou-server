@@ -30,7 +30,7 @@ export const check = (req, res, next) => {
       return authData;
     }
   } catch (e) {
-    console.error(e.message);
+    console.error('Auth check failed:', e.message);
     if (next !== undefined) {
       res.error(401);
     } else {
